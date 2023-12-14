@@ -1,0 +1,21 @@
+databases:
+  - name: takahuri
+    databaseName: takahuri
+    user: takahuri
+    region: singapore
+
+services:
+  - type: web
+    name: takahuri
+    env: ruby
+    region: singapore
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: postgres://takahuri_user:UmwdkfJFAsTs32JBt86WUUqBz3nK990g@dpg-clthmtol5elc73dpel70-a/takahuri
+        fromDatabase:
+          name: takahuri
+          property: connectionString
+      - key: dfcdecde53c7f011fa57b81332dee53a
+        sync: false
