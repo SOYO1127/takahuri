@@ -1,0 +1,18 @@
+.takahuri{
+    text-align:center;
+    padding-top: 30px;
+}
+
+.takahuri h1{
+    font-size:100px;
+    font-family:'Cherry Bomb One', cursive;
+    background-image: url(top.png);
+}
+.takahuri h2{
+    line-height: 0;
+}
+.t1{
+    text-align:center;
+    font-size: 30px;
+    padding-top: 60px;
+}

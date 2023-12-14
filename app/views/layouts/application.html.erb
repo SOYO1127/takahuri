@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Takahuri</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <script src="https://kit.fontawesome.com/72035acfe7.js" crossorigin="anonymous"></script>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+ <header>
+  <div class="header-list">
+    <h1>たかフリ</h1>
+    <%= link_to "商品一覧へ", posts_path %>
+    <%= link_to "検索する", posts_path %>
+    <%= link_to "たかフリとは？", posts_question_path %>
+    <% if user_signed_in? %>
+      <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to "新規登録", new_user_registration_path %>
+      <%= link_to "ログイン", new_user_session_path %>
+    <% end %>
+  </div>
+ </header>
+ <main>
+  <%= yield %>
+ </main>
+</body>
+
+</html>

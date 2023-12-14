@@ -1,0 +1,79 @@
+
+<div class="takahuri">
+  <h1>た か フ リ</h1>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap" rel="stylesheet">
+
+  <br>
+  <h2>ー高経生専用フリマサイトー</h2>
+</div>
+<br>
+<div class="t1">
+高経生同士で、
+<br>
+不用品を0円～取引できる。
+</div>
+<br>
+<%= link_to "たかフリとは？", posts_question_path %>
+
+<h3>一覧ページ</h3>
+
+<h3>投稿を検索</h3>
+
+<%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+  <% Tag.all.each do |t| %>
+      <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
+  <% end %>
+  <%= submit_tag '検索' %>
+<% end %>
+
+<%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+  <%= text_field_tag :tag %>
+  <%= submit_tag 'タグを追加' %>
+<% end %>
+
+ <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+   <%= text_field_tag :search %>
+   <%= submit_tag '検索する'  %>
+<% end %>
+
+<%= link_to "新規投稿へ", new_post_path %>
+<div class="posts-container">
+
+<% if user_signed_in? %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+<% end %>
+
+  <% @posts.each do |t| %>
+    <div class="post">
+
+    <%= image_tag t.image_url, size: "250x200" if t.image? %>
+
+    <%= t.user.email %>
+      <%= t.name %>
+      <%= t.price %>
+      <%= t.about %>
+
+      <% if user_signed_in? %>
+      <% if current_user.already_liked?(t) %>
+          <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+            <i class="fas fa-heart"></i><%= t.likes.count %>
+          <% end %>
+      <% else %>
+          <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+            <i class="fas fa-heart"></i><%= t.likes.count %>
+          <% end %>
+      <% end %>
+  <% else %>
+  <i class="fas fa-heart"></i><%= t.likes.count %>
+  <% end %>
+
+      <%= link_to "詳細へ", post_path(t.id) %>
+
+      <%= link_to "編集する", edit_post_path(t.id) %>
+      <%= button_to "削除する", post_path(t.id), method: :delete %> 
+    </div>
+  <% end %>
+
+</div>
